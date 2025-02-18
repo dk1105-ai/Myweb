@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Updated Layout</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* body {
+            font-family: Arial, sans-serif;
+        } */
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            overflow-x: hidden; /* Prevent horizontal scrollbar due to animations */
+        }
+
+         .container {
+            display: grid;
+            grid-template-areas: "header header"
+                                  "nav nav"
+                                  "vnav main"
+                                  "footer footer";
+            grid-template-columns: 250px auto;
+            grid-template-rows: 80px 60px auto 80px;
+            height: 100vh;
+           
+        }
+       
+
+        /* Header */
+        .header {
+            grid-area: header;
+            background: lightcoral;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(-45deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.3) 100%);
+            transform: translateX(-100%);
+            animation: backgroundSlide 5s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes backgroundSlide {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+
+        /* .logo {
+
+            height: 80px;
+            width: 100px;
+            background: url("") no-repeat center;
+            background-size: contain;
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+            margin-right: 0px;
+            border-radius: 5px;
+        } */
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-right: 20px;
+            z-index: 1; /* Ensure logo is above the animated background */
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            animation: rotateLogo 5s linear infinite;
+        }
+
+        @keyframes rotateLogo {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* .logoImage{
+            height: 40px;
+            width: 40px;
+            margin-left: 20px;
+        } */
+/* 
+        .search-bar {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        } */
+
+        .search-bar {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            z-index: 1; /* Ensure search bar is above the animated background */
+        }
+
+        .search-bar input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 30px;
+            width: 100%;
+            margin-right: 10px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* .search-bar input {
+            padding: 8px;
+            width: 50%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        } */
+
+        .search-bar button {
+            background: lightblue;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+       
+
+        /* Navigation Sidebar (Left) */
+        .sidebar {
+            background: lightseagreen;
+           
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 10px;
+            grid-area: vnav;
+            transition: transform 0.3s ease; /* Add transition */
+          
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: black;
+            padding: 10px;
+            background: rgb(225, 198, 195);
+           
+            border-radius: 5px;
+            text-align: center;
+            justify-content: center;
+            display: block;
+            height: 80px;
+            width: 220px;
+            transition: all 0.3s ease-in-out;
+            transform-origin: left center;
+            /* transition: transform 0.3s ease; Add transition for links */
+        }
+       
+        .sidebar a:hover{
+            background-color: #9f578f;
+            transform: scale(1.05); /* Zoom out effect */
+        }
+
+        /* Navigation Bar (Below Header) */
+        .navbar {
+            display: flex;
+            background: #c5d8a4;
+            padding: 10px;
+            gap: 5px;
+            justify-content: center;
+            align-items: center;
+            grid-area: nav;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            background:lightseagreen;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        .navbar a:hover {
+            background: #3a6123;
+        }
+
+        /* Dropdown on Hover */
+       
+        .dropdown-container {
+            position: relative;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            background: #769ee6; /* Burgundy */
+            padding: 10px;
+            width: 180px;
+            top: 100%; /* Position below the link */
+            left: 0;
+            border-radius: 5px;
+            z-index: 10; /* Ensure it's above other content */
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 5px;
+            color:black;
+            text-decoration: none;
+        }
+        .dropdown a:hover {
+    background-color: #7eddd2; /* Darker navy on hover */
+} 
+
+        .dropdown-container:hover .dropdown {
+            display: block; /* Corrected selector */
+        }
+
+
+        /* Main Content */
+        /* .main {
+            background: #eaf3d9;
+           
+             padding: 20px; 
+            height: 700px;
+             grid-area: main;
+             overflow-y: scroll;
+            
+        } */
+        .main {
+            grid-area: main;
+            padding: 20px;
+            overflow-y: scroll;
+            background: #eaf3d9;
+            height: 700px;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                
+                transform: translateY(0);
+            }
+        }
+
+        /* .grid-container{
+            margin-left: 100px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            overflow-y: scroll;
+            justify-content: space-evenly;
+            align-items: center;
+            
+        } */
+        .grid-container {
+            margin-left: 100px;
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 20px;
+            overflow-y: scroll;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+        /* .card {
+            background: #27408b;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            height: 100px;
+            width: 300px;
+           
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            /* transition: transform 0.3s ease; Add transition for smooth zoom */
+        
+        .card {
+            
+            background: #9d4762f4;
+            border: 1px solid #eaecef;
+            border-radius: 10px;
+            padding: 15px;
+            /* text-align: center; */
+            height: 100px;
+            width: 300px;
+            color:white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+       
+
+        /* .card:hover {
+            transform: scale(1.1); // Zoom in on hover //
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        } */
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+      
+
+        .book-now {
+            background: orange;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        .book-now {
+            background: orange;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .book-now:hover {
+            /* background: #0056b3; */
+            transform: scale(1.1);
+        }
+
+
+        /* Footer */
+        /* .footer {
+            background: #27408b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            gap: 10px;
+           grid-area: footer;
+           
+        } */
+        .footer {
+            grid-area: footer;
+            background-color: #543d4c;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            gap: 10px;
+            grid-area: footer;
+            font-size: 0.9rem;
+        }
+
+        .footer img {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+        .footer a {
+            color: white;
+            margin: 0 10px;
+            transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        .footer a:hover {
+            color: #e9ecef;
+            transform: scale(1.1);
+        }
+        h2{
+            color: black;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+      
+        <header class="header">
+            <div class="logo">
+                <img class="logoImage" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTveZkAQc6Qo6An9eAoDAD7GEJMCEjlva8VB1hsDQJUapLlWgHwQmujOhLR-pge_PYZagI&usqp=CAU" alt=""> 
+                <label>CardVerse</label></div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search here">
+                <button>Go</button>
+            </div>
+        </header>
+
+        
+        <nav class="navbar">
+            <!-- Dropdown container for HOME link -->
+            <div class="dropdown-container">
+                <a href="#">HOME</a>
+                <div class="dropdown">
+                    <a href="#">SHOP</a>
+                    <h2>Welcome to ShopEase</h2>
+                    <p>Explore all types of shopping categories here.</p>
+                </div>
+            </div>
+
+            <!-- Dropdown container for SHOP link -->
+            <div class="dropdown-container">
+                <a href="#">SHOP</a>
+                <div class="dropdown">
+                    <h2>Shop Categories</h2>
+                    <p>Find products for Men, Women, and Kids.</p>
+                    <a href="#">Men</a>
+                    <a href="#">Women</a>
+                    <a href="#">Kids</a>
+                </div>
+            </div>
+
+            <!-- Dropdown container for OFFER link -->
+            <div class="dropdown-container">
+                <a href="#">OFFER</a>
+                <div class="dropdown">
+                    <h2>Best Deals</h2>
+                    <p>Check out the latest discounts and offers.</p>
+                    <a href="#">latest offers</a>
+                    <a href="#">discount</a>
+                </div>
+            </div>
+
+            <!-- Dropdown container for CONTACT link -->
+            <div class="dropdown-container">
+                <a href="#">CONTACT</a>
+                <div class="dropdown">
+                    <h2>Contact Us</h2>
+                    <p>Email: support@shopease.com</p>
+                    <p>Phone: +123 456 7890</p>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Left Sidebar (Vertical Links) -->
+        <nav class="sidebar">
+            <a href="https://www.flipkart.com/">flipkart</a>
+            <a href="https://www.bing.com/ck/a?!&&p=fbe0170e93df1b020e540f43c0f2999c534c0bd4afdd9a4c1a9ef1cff8ec71a3JmltdHM9MTczOTMxODQwMA&ptn=3&ver=2&hsh=4&fclid=0ad43572-9fb8-63ab-09eb-21729e0a625f&psq=amazon&u=a1aHR0cDovL3d3dy5hbWF6b24uaW4&ntb=1">Amazon</a>
+            <a href="https://blinkit.com/">blinkit</a>
+            <a href="https://www.zomato.com/">zomato</a>
+            <a href="https://www.swiggy.com/">swiggy</a>
+            <a href="https://www.shopsy.in/">shopsy</a>
+            <a href="https://www.meesho.com/">Meesho</a>
+            <a href="https://www.myntra.com/">Myntra</a>
+        </nav>
+        
+
+        <!-- Main Content -->
+        <div class="main">
+            <div class="grid-container">
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+                <div class="card">Card information <button class="book-now">Book Now</button></div>
+            </div>
+        </div>
+
+       <footer class="footer">
+        <!-- <a href="https://in.linkedin.com/" target="_blank">
+            <img src="https://th.bing.com/th?id=ODLS.fc619bab-a786-4b75-8669-6881202d98da&w=32&h=32&qlt=90&pcl=fffffc&o=6&pid=1.2"  alt="">Linkedin
+        </a>
+        <a href="https://www.instagram.com/" target="_blank">
+            <img src="https://th.bing.com/th?id=ODLS.7e9375d5-26a4-4702-bb17-c140827dc762&w=32&h=32&qlt=90&pcl=fffffc&o=6&pid=1.2" alt="">Instagram
+        </a>
+        <a href="https://www.facebook.com/" target="_blank">
+            <img src="https://th.bing.com/th?id=ODLS.ed551f5f-86b4-4f3c-b131-c5f6234517b7&w=32&h=32&qlt=90&pcl=fffffc&o=6&pid=1.2" alt="">Facebook
+        </a> -->
+        <h2>Follow us on:</h2>
+
+        <div class="footer-social">
+            
+            <a href="#" title="Facebook"><img src="https://cdn-icons-png.flaticon.com/512/174/174848.png" alt="Facebook"></a>
+            <a href="#" title="Twitter"><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter"></a>
+            <a href="#" title="Instagram"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram"></a>
+            <a href="#" title="LinkedIn"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn"></a>
+        </div>
+
+       </footer>
+        
+    </div>
+</body>
+</html> 
